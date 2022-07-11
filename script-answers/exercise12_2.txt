@@ -1,0 +1,10 @@
+Script started on 2022-07-11 11:06:35+02:00 [TERM="xterm-256color" TTY="/dev/pts/5" COLUMNS="203" LINES="60"]
+]0;mjendrian@mjendrian-XPS-15-9500: ~/Projects/part12-containers-applications/script-answers[01;32mmjendrian@mjendrian-XPS-15-9500[00m:[01;34m~/Projects/part12-containers-applications/script-answers[00m$ docker container run -it ubuntu bash
+[?2004h]0;root@c7206be6b323: /root@c7206be6b323:/# [K]0;root@c7206be6b323: /root@c7206be6b323:/# mkdir [7m/usr/src/app[27m/usr/src/app
+[?2004l[?2004h]0;root@c7206be6b323: /root@c7206be6b323:/# tocj h  uch [7m/usr/src/app/index.js[27m/usr/src/app/index.js
+[?2004l[?2004h]0;root@c7206be6b323: /root@c7206be6b323:/# [Kexit
+[?2004lexit
+]0;mjendrian@mjendrian-XPS-15-9500: ~/Projects/part12-containers-applications/script-answers[01;32mmjendrian@mjendrian-XPS-15-9500[00m:[01;34m~/Projects/part12-containers-applications/script-answers[00m$ exit
+exit
+
+Script done on 2022-07-11 11:07:39+02:00 [COMMAND_EXIT_CODE="0"]
