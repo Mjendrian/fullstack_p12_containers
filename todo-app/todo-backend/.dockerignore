@@ -1,5 +1,4 @@
 node_modules
-redis
 Dockerfile
 .dockerignore
 .gitignore

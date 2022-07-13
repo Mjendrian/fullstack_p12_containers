@@ -9,57 +9,50 @@ services:
       MONGO_INITDB_DATABASE: the_database
     volumes:       
       - ./todo-backend/mongo/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js
-      - ./todo-backend/mongo_data:/data/db
-    container_name: mongo-dev
+    container_name: mongo-prod
   
   redis:
     image: redis
     ports:
       - 6379:6379
     command: ['redis-server', '--appendonly', 'yes'] 
-    volumes:
-      - ./todo-backend/redis_data:/data
-    container_name: redis-dev
+    container_name: redis-prod
 
   node:
-    image: todo-back-dev-img
+    image: todo-back-prod-img
     build:
       context: ./todo-backend # The context will pick this directory as the "build context"
-      dockerfile: dev.Dockerfile # This will simply tell which dockerfile to read
-    volumes:
-      - ./todo-backend/:/usr/src/app # The path can be relative, so ./ is enough to say "the same location as the docker-compose.yml"
+      dockerfile: Dockerfile # This will simply tell which dockerfile to read
     ports:
       - 3001:3001
     environment: 
-      ENV DEBUG: playground:* 
       ENV REDIS_URL: redis://redis:6379 
       ENV MONGO_URL: mongodb://the_username:the_password@mongo:27017/the_database
-    container_name: todo-back-dev 
+    container_name: todo-back-prod 
     depends_on:
       - redis
       - mongo
 
   app:
-    image: todo-app-dev
+    image: todo-app-prod-image
     build:
       context: ./todo-frontend # The context will pick this directory as the "build context"
-      dockerfile: dev.Dockerfile # This will simply tell which dockerfile to read
-    volumes:
-      - ./todo-frontend/:/usr/src/app # The path can be relative, so ./ is enough to say "the same location as the docker-compose.yml"
+      dockerfile: Dockerfile # This will simply tell which dockerfile to read
     ports:
-      - 3000:3000
+      - 80:80
     environment: 
       REACT_APP_BACKEND_URL: http://localhost:8080/api
-    container_name: todo-app-dev # This will name the container hello-front-dev
+    container_name: todo-app-prod # This will name the container hello-front-dev
     depends_on:
       - node
 
   nginx:
     image: nginx:1.20.1
     volumes:
-      - ./nginx.dev.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx.prod.conf:/etc/nginx/nginx.conf:ro
     ports:
       - 8080:80
     container_name: reverse-proxy
     depends_on:
       - app # wait for the frontend container to be started
+      - node
