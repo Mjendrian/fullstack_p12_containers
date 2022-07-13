@@ -3,9 +3,11 @@ import axios from '../util/apiClient'
 
 import List from './List'
 import Form from './Form'
+import Detail from './Detail'
 
 const TodoView = () => {
   const [todos, setTodos] = useState([])
+  const [todo, setTodo] = useState(null)
 
   const refreshTodos = async () => {
     const { data } = await axios.get('/todos')
@@ -26,6 +28,11 @@ const TodoView = () => {
     refreshTodos()
   }
 
+  const showTodo = async (todo) => {
+    const activeTodo = await axios.get(`/todos/${todo._id}`);
+    setTodo(activeTodo.data);
+  }
+
   const completeTodo = async (todo) => {
     await axios.put(`/todos/${todo._id}`, {
       text: todo.text,
@@ -38,7 +45,8 @@ const TodoView = () => {
     <>
       <h1>Todos</h1>
       <Form createTodo={createTodo} />
-      <List todos={todos} deleteTodo={deleteTodo} completeTodo={completeTodo} />
+      <Detail todo={todo} />
+      <List todos={todos} deleteTodo={deleteTodo} completeTodo={completeTodo} showTodo={showTodo} />
     </>
   )
 }
